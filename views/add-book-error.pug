@@ -1,0 +1,11 @@
+// views/add-book-error.pug
+html
+  head
+    title= pageTitle
+  body
+    h1= pageTitle
+    p An error occurred while adding the book.
+    p= errorMessage
+    a(href='/book/new') Add Another Book
+    p OR
+    a(href='/books') Back to Book List

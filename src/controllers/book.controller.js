@@ -1,11 +1,11 @@
 import bookService from "../services/book.service.js";
 
-function getBookList(req, res) {
+const getBookList = (_req, res) => {
     const books = bookService.getBooks();
     res.render('book-list', { books });
 }
 
-function getBookDetails(req, res) {
+const getBookDetails = (req, res) => {
     const id = parseInt(req.params.id);
     const books = bookService.getBooks();
     const book = books.find((book) => book.id === id);
@@ -16,11 +16,11 @@ function getBookDetails(req, res) {
     res.render('book-details', { book });
 }
 
-function renderAddBookForm(req, res) {
+const renderAddBookForm = (_req, res) => {
     res.render('add-book');
 }
 
-function addNewBook(req, res) {
+const addNewBook = (req, res) => {
     const { id, name } = req.body;
     if (!id || !name) {
         res.status(400).send('Invalid book data');
@@ -29,9 +29,12 @@ function addNewBook(req, res) {
     const newBook = { id: parseInt(id), name };
     const added = bookService.addBook(newBook);
     if (added) {
-        res.status(201).send('Book added successfully');
+        res.render('add-book-success', { pageTitle: 'Book Added Successfully' });
     } else {
-        res.status(409).send('A book with the same ID already exists');
+        res.render('add-book-error', {
+            pageTitle: 'Error Adding Book',
+            errorMessage: 'A book with the same ID already exists',
+        });
     }
 }
 

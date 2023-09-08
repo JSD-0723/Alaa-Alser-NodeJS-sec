@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-function getBooks() {
+const getBooks = () => {
     const filePath = path.join(
         new URL('.', import.meta.url).pathname,
         '../../books.json'
@@ -9,7 +9,7 @@ function getBooks() {
     return books;
 }
 
-function addBook(newBook) {
+const addBook = (newBook) => {
     const books = getBooks();
     const existingBook = books.find((book) => book.id === newBook.id);
     if (existingBook) {
