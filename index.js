@@ -5,8 +5,10 @@ import bookRoutes from './src/routers/book.route.js'
 
 const app = express();
 const port = 3000;
-
+// set default engine
 app.set('view engine', 'pug');
+
+// pars form requests
 app.use(express.urlencoded({ extended: true }));
 
 // Handle invalid endpoints
