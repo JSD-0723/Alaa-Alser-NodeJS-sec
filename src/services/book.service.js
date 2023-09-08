@@ -5,8 +5,23 @@ const getBooks = () => {
     const filePath = path.join(
         new URL('.', import.meta.url).pathname,
         '../../books.json'
-    ); const books = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    return books;
+    );
+    try {
+        let data;
+        if (fs.existsSync(filePath)) {
+            data = fs.readFileSync(filePath, 'utf-8');
+            const parsedData = JSON.parse(data);
+            if (!Array.isArray(parsedData)) {
+                throw new Error('Book file is invalid');
+            }
+            return parsedData;
+        } else {
+            fs.writeFileSync(filePath, '[]');
+            return [];
+        }
+    } catch (error) {
+        throw error;
+    }
 }
 
 const getBookById = (id) => {
