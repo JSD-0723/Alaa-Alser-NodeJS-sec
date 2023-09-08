@@ -9,6 +9,11 @@ const getBooks = () => {
     return books;
 }
 
+const getBookById = (id) => {
+    const books = getBooks();
+    return books.find((book) => book.id === id);
+}
+
 const addBook = (newBook) => {
     const books = getBooks();
     const existingBook = books.find((book) => book.id === newBook.id);
@@ -26,6 +31,7 @@ const addBook = (newBook) => {
 
 
 export default {
-    addBook,
-    getBooks
+    getBooks,
+    getBookById,
+    addBook
 }

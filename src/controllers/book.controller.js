@@ -7,8 +7,7 @@ const getBookList = (_req, res) => {
 
 const getBookDetails = (req, res) => {
     const id = parseInt(req.params.id);
-    const books = bookService.getBooks();
-    const book = books.find((book) => book.id === id);
+    const book = bookService.getBookById(id);
     if (!book) {
         res.status(404).send('Book not found');
         return;
