@@ -1,5 +1,5 @@
 const errorMiddleware = (err, req, res, next) => {
-    res.status(500).send('Something went wrong!');
+    res.status(err.status || 500).json(err.message);
 };
 
 export default errorMiddleware

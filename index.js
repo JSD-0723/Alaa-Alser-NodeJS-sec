@@ -12,14 +12,16 @@ app.set('view engine', 'pug');
 // pars form requests
 app.use(express.urlencoded({ extended: true }));
 
+// book routes
+app.use(bookRoutes);
+
 // Handle invalid endpoints
 app.use(errorNotFoundMiddleware);
 
 // Error handling middleware
 app.use(errorMiddleware);
 
-// book routes
-app.use(bookRoutes);
+
 
 // run the sever on port
 app.listen(port, () => {

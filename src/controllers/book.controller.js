@@ -1,41 +1,58 @@
 import bookService from "../services/book.service.js";
 
-const getBookList = (_req, res) => {
-    const books = bookService.getBooks();
-    res.render('book-list', { books });
-}
+const getBookList = (_req, res, next) => {
+    try {
+        const books = bookService.getBooks();
+        res.render("book-list", { books });
+    } catch (error) {
+        next(error)
+    }
+};
 
 const getBookDetails = (req, res) => {
     const id = parseInt(req.params.id);
     const book = bookService.getBookById(id);
-    if (!book) {
-        res.status(404).send('Book not found');
-        return;
+    try {
+        if (!book) {
+            res.status(404).send("Book not found");
+            return;
+        }
+        res.render("book-details", { book });
+    } catch (error) {
+        next(error)
     }
-    res.render('book-details', { book });
-}
+};
 
 const renderAddBookForm = (_req, res) => {
-    res.render('add-book');
-}
+    try {
+        res.render("add-book");
+    } catch (error) {
+        next(error)
+    }
+};
 
 const addNewBook = (req, res) => {
     const { id, name } = req.body;
-    if (!id || !name) {
-        res.status(400).send('Invalid book data');
-        return;
+
+    try {
+        if (!id || !name) {
+            res.status(400).send("Invalid book data");
+            return;
+        }
+        const newBook = { id: parseInt(id), name };
+        const added = bookService.addBook(newBook);
+        if (added) {
+            res.render("add-book-success", { pageTitle: "Book Added Successfully" });
+        } else {
+            res.render("add-book-error", {
+                pageTitle: "Error Adding Book",
+                errorMessage: "A book with the same ID already exists",
+            });
+        }
+    } catch (error) {
+        next(error)
     }
-    const newBook = { id: parseInt(id), name };
-    const added = bookService.addBook(newBook);
-    if (added) {
-        res.render('add-book-success', { pageTitle: 'Book Added Successfully' });
-    } else {
-        res.render('add-book-error', {
-            pageTitle: 'Error Adding Book',
-            errorMessage: 'A book with the same ID already exists',
-        });
-    }
-}
+};
 
 export default {
     getBookList,
