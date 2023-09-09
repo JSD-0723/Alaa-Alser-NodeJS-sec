@@ -9,7 +9,7 @@ const getBookList = (_req, res, next) => {
     }
 };
 
-const getBookDetails = (req, res) => {
+const getBookDetails = (req, res, next) => {
     const id = parseInt(req.params.id);
     const book = bookService.getBookById(id);
     try {
@@ -23,7 +23,7 @@ const getBookDetails = (req, res) => {
     }
 };
 
-const renderAddBookForm = (_req, res) => {
+const renderAddBookForm = (_req, res, next) => {
     try {
         res.render("add-book");
     } catch (error) {
@@ -31,7 +31,7 @@ const renderAddBookForm = (_req, res) => {
     }
 };
 
-const addNewBook = (req, res) => {
+const addNewBook = (req, res, next) => {
     const { id, name } = req.body;
 
     try {
